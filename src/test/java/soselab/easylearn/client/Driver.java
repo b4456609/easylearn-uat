@@ -1,10 +1,11 @@
-package soselab.easylearn;
+package soselab.easylearn.client;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import soselab.easylearn.LoginPage;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

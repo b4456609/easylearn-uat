@@ -3,8 +3,11 @@ package soselab.easylearn;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import feign.Feign;
-import soselab.easylearn.model.*;
+import soselab.easylearn.client.ClientFactory;
+import soselab.easylearn.model.AddPack;
+import soselab.easylearn.model.Pack;
+import soselab.easylearn.model.PackBuilder;
+import soselab.easylearn.model.VersionBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,26 +15,19 @@ import java.util.List;
 public class AddPackTest {
 
     private String userName = "name";
-    private String userId = "id";
+    private String userId = "1009840175700426";
     private String packId = "pack12479861234";
+    private PackClient client;
+
 
     @Given("^I am a  logged-in  user$")
     public void i_am_a_logged_in_user() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-//        CreateDriverAndLogin();
-//        throw new PendingException();
+        client = ClientFactory.getClient(PackClient.class);
+
     }
 
     @When("^I add pack with following content$")
     public void i_add_pack_with_following_content(List<AddPack> pack) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // List<YourType>, List<List<E>>, List<Map<K,V>> or Map<K,V>.
-        // E,K,V must be a scalar (String, Integer, Date, enum etc)
-        PackClient bank = Feign.builder()
-                .encoder(new JacksonEncoder())
-                .decoder(new JacksonDecoder())
-                .target(PackClient.class, "https://dev.microservices.ntou.edu.tw");
 
         Pack pack1 = new PackBuilder()
                 .setCreatorUserId(userId)
@@ -39,11 +35,11 @@ public class AddPackTest {
                 .setDescription(pack.get(0).getDescription())
                 .setId(packId)
                 .setVersion(Arrays.asList(new VersionBuilder()
+                        .setId(userId)
                         .setContent(pack.get(0).getContent())
                         .createVersion()))
                 .createPack();
-        bank.addPack(pack1, "id");
-//        throw new PendingException();
+        client.addPack(pack1, userId);
     }
 
     @Then("^the pack create$")
