@@ -1,7 +1,7 @@
 Feature: add version
 
   @easylearn_pack endpoint /{packId}/version POST
-  @easylearn-pack endpoint / GET
+  @easylearn_pack endpoint / GET
   Scenario: add version
     Given I am viewing a pack
     When I edit a version with following content
