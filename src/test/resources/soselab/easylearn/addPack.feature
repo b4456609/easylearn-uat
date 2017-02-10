@@ -1,5 +1,5 @@
 Feature: add pack
-  @easylearn_pack endpoint / POST
+  @easylearn_pack_endpoint_/_POST
   Scenario: add pack
     Given I am a  logged-in  user
     When I add pack with following content
